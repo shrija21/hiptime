@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
 		if user_signed_in?
 			@items = Item.where(:user_id => current_user.id).order("created_at DESC")
 		end
-		
+
 	end
 
 	def show
@@ -40,6 +40,11 @@ class ItemsController < ApplicationController
 		redirect_to root_path
 	end
 
+	def complete
+		@item = Item.find(params[:id])
+		@item.update_attribute(:completed_at, Time.now)
+		redirect_to root_path
+	end
 
 	private
 		def item_params
